@@ -4,6 +4,8 @@ const resolve = pathResolver(import.meta);
 
 import { option, ResumeRetweet } from "./retweet-bot.ts";
 
+import "./server.ts";
+
 const env = config({
   path: resolve("./.env"),
   safe: true,
