@@ -75,12 +75,14 @@ export class ResumeRetweet {
 
   public async callback(res: StreamTweet) {
     if (!res.matching_rules.some((e) => e.tag === this.tag)) return;
+    console.log(res);
     //Deno.writeTextFileSync(`./sample/res${count++}.json`, JSON.stringify(res));
 
     // 画像が無かったらreturn
     const media = res.includes?.media && res.includes.media[0];
     if (!media) return;
     if (media.type !== "photo") return;
+    console.log("Get media!", media);
 
     let tweet: TweetObject | undefined = undefined;
     if (res.data.text.startsWith("RT")) {
@@ -95,10 +97,13 @@ export class ResumeRetweet {
       tweet = res.data;
     }
     if (!tweet) return;
+    console.log("Get tweet!", tweet);
+
     const user = res.includes?.users?.find((user) =>
       user.id === tweet?.author_id
     );
     if (!user) return;
+    console.log("Get user!", user);
 
     const _retweetRes = await statusRetweet(this.auth, res.data.id);
 
