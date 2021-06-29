@@ -110,7 +110,8 @@ export class ResumeRetweet {
     const resume: Resume = {
       tweetId: tweet.id,
       userId: user.id,
-      userName: user.name,
+      userName: user.username,
+      name: user.name,
       date: tweet.created_at || null,
       imageUrl: media.url || null,
       res,
