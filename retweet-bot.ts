@@ -81,7 +81,7 @@ export class ResumeRetweet {
     const user = getUser();
     if (!user) return;
 
-    console.log(res, user);
+    //console.log(res, user);
 
     const media = res.includes?.media && res.includes.media[0];
     if (!media) return;
@@ -95,14 +95,20 @@ export class ResumeRetweet {
       userName: user.name,
       date: res.data.created_at || null,
       imageUrl: media.url || null,
+      res,
     };
-    console.log(`[${new Date().toISOString()}]`, resume);
+    console.log(resume);
     this.addResume(resume);
   }
 }
 
 export const option: StreamParam = {
-  expansions: { author_id: true, "attachments.media_keys": true },
+  expansions: {
+    author_id: true,
+    "attachments.media_keys": true,
+    "referenced_tweets.id": true,
+    "referenced_tweets.id.author_id": true,
+  },
   "user.fields": { username: true },
   "tweet.fields": { created_at: true },
   "media.fields": { url: true, preview_image_url: true },
