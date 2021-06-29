@@ -3,9 +3,9 @@
     "attachments": {
       "media_keys": ["3_1409719934674870272"]
     },
-    "author_id": "1114188880255668224",
-    "created_at": "2021-06-29T03:46:50.000Z",
-    "id": "1409719986801704960",
+    "author_id": "824987882783793152",
+    "created_at": "2021-06-29T03:47:04.000Z",
+    "id": "1409720044792078341",
     "referenced_tweets": [{
       "type": "retweeted",
       "id": "1409719940693721091"
@@ -19,6 +19,10 @@
       "url": "https://pbs.twimg.com/media/E5BUz8MVIAAARFy.png"
     }],
     "users": [{
+      "id": "824987882783793152",
+      "name": "すずとものついったー@とりあえずナナシス",
+      "username": "SuzuTomo2001"
+    }, {
       "id": "1114188880255668224",
       "name": "botTester",
       "username": "botTest46558316"
@@ -36,5 +40,8 @@
   "matching_rules": [{
     "id": 1406961011857395700,
     "tag": "t7sResumeBOT"
+  }, {
+    "id": 1398082338077040600,
+    "tag": "maji-uranai-collectBOT"
   }]
 }
