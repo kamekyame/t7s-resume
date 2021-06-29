@@ -55,6 +55,8 @@ export class ResumeRetweet {
   }
 
   private addResume(resume: Resume) {
+    const sameTweet = this.resumes.find((r) => r.tweetId == resume.tweetId);
+    if (sameTweet) return;
     this.resumes.push(resume);
     this.write();
   }
@@ -106,7 +108,7 @@ export class ResumeRetweet {
       userName: user.name,
       date: tweet.created_at || null,
       imageUrl: media.url || null,
-      res: null,
+      res,
     };
     console.log(resume);
     this.addResume(resume);
