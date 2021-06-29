@@ -51,6 +51,11 @@ export class ResumeRetweet {
     );
   }
 
+  private addResume(resume: Resume) {
+    this.resumes.push(resume);
+    this.write();
+  }
+
   public async checkRule() {
     console.log(this.tag, this.value());
     const rules = await getRules(this.bearerToken);
@@ -92,8 +97,7 @@ export class ResumeRetweet {
       imageUrl: media.url || null,
     };
     console.log(`[${new Date().toISOString()}]`, resume);
-    this.resumes.push(resume);
-    this.write();
+    this.addResume(resume);
   }
 }
 
