@@ -5,9 +5,12 @@ import {
   statusRetweet,
   StreamParam,
   StreamTweet,
+  TweetObject,
 } from "./deps.ts";
 
 import { Resume } from "./type.ts";
+
+let count = 0;
 
 export class ResumeRetweet {
   private readonly auth: OAuth1Info;
@@ -69,33 +72,41 @@ export class ResumeRetweet {
   }
 
   public async callback(res: StreamTweet) {
-    //Deno.writeTextFileSync(`res${count++}.json`, JSON.stringify(res));
     if (!res.matching_rules.some((e) => e.tag === this.tag)) return;
-    const getUser = () => {
-      if (res.includes?.users) {
-        return res.includes.users.find((u) =>
-          u.username !== "t7s_resume" && u.id === res.data.author_id
-        );
-      }
-    };
-    const user = getUser();
-    if (!user) return;
+    //Deno.writeTextFileSync(`./sample/res${count++}.json`, JSON.stringify(res));
 
-    //console.log(res, user);
-
+    // 画像が無かったらreturn
     const media = res.includes?.media && res.includes.media[0];
     if (!media) return;
     if (media.type !== "photo") return;
 
+    let tweet: TweetObject | undefined = undefined;
+    if (res.data.text.startsWith("RT")) {
+      const referencedTweets = res.data.referenced_tweets;
+      if (!referencedTweets) return;
+      if (referencedTweets[0].type !== "retweeted") return;
+
+      tweet = res.includes?.tweets?.find((tweet) =>
+        tweet.id === referencedTweets[0].id
+      );
+    } else {
+      tweet = res.data;
+    }
+    if (!tweet) return;
+    const user = res.includes?.users?.find((user) =>
+      user.id === tweet?.author_id
+    );
+    if (!user) return;
+
     const _retweetRes = await statusRetweet(this.auth, res.data.id);
 
     const resume: Resume = {
-      tweetId: res.data.id,
+      tweetId: tweet.id,
       userId: user.id,
       userName: user.name,
-      date: res.data.created_at || null,
+      date: tweet.created_at || null,
       imageUrl: media.url || null,
-      res,
+      res: null,
     };
     console.log(resume);
     this.addResume(resume);

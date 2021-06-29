@@ -24,8 +24,10 @@ const bearerToken = await getBearerToken(auth.consumerKey, auth.consumerSecret);
 const resumeRetweet = new ResumeRetweet(auth, bearerToken);
 await resumeRetweet.checkRule();
 
-//const res = JSON.parse(Deno.readTextFileSync("./sample/res0.json"));
-//resumeRetweet.callback(res);
+/*for (let i = 0; i < 3; i++) {
+  const res = JSON.parse(Deno.readTextFileSync(`./sample/res${i}.json`));
+  resumeRetweet.callback(res);
+}*/
 connectStream(
   bearerToken,
   (res) => {
