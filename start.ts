@@ -28,10 +28,12 @@ await resumeRetweet.checkRule();
   const res = JSON.parse(Deno.readTextFileSync(`./sample/res${i}.json`));
   resumeRetweet.callback(res);
 }*/
-connectStream(
+await connectStream(
   bearerToken,
   (res) => {
     resumeRetweet.callback(res);
   },
   option,
 );
+
+Deno.exit(1);
