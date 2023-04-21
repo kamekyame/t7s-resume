@@ -33,7 +33,8 @@ const route = () => {
   const router = createRouter();
   router.get("resumes.json", async (req) => {
     checkResFile();
-    await req.sendFile(resFilePath);
+    //await req.sendFile(resFilePath);
+    await req.sendFile("./data/resumes_fix.json");
   });
   return router;
 };
